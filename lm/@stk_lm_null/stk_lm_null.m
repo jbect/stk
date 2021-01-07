@@ -33,7 +33,7 @@
 
 function lm = stk_lm_null ()
 
-lm = class (struct (), 'stk_lm_null', stk_lm_ ());
+lm = class (struct (), 'stk_lm_null', stk_lm_noparam_ ());
 
 end % function
 

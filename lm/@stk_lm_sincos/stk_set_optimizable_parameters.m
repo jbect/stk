@@ -1,13 +1,17 @@
-% STK_LM_CUBIC creates a cubic linear model object
+% STK_SET_OPTIMIZABLE_PARAMETERS [overload STK function, internal]
 %
-% CALL: LM = STK_LM_CUBIC ()
+% INTERNAL FUNCTION WARNING:
 %
-%    creates a cubic linear model object LM.
+%    This function is currently considered as internal.  STK users that
+%    wish to experiment with parameter classes can already overload it,
+%    but should be aware that API-breaking changes are likely to happen
+%    in future releases.
+%
+% See also: stk_get_optimizable_parameters
 
 % Copyright Notice
 %
-%    Copyright (C) 2017, 2018, 2021 CentraleSupelec
-%    Copyright (C) 2014 SUPELEC
+%    Copyright (C) 2021 CentraleSupelec
 %
 %    Author:  Julien Bect  <julien.bect@centralesupelec.fr>
 
@@ -16,7 +20,7 @@
 %    This file is part of
 %
 %            STK: a Small (Matlab/Octave) Toolbox for Kriging
-%               (https://github.com/stk-kriging/stk/)
+%               (http://sourceforge.net/projects/kriging)
 %
 %    STK is free software: you can redistribute it and/or modify it under
 %    the terms of the GNU General Public License as published by the Free
@@ -31,11 +35,13 @@
 %    You should  have received a copy  of the GNU  General Public License
 %    along with STK.  If not, see <http://www.gnu.org/licenses/>.
 
-function lm = stk_lm_cubic ()
+function lm = stk_set_optimizable_parameters (lm, param)
 
-lm = class (struct (), 'stk_lm_cubic', stk_lm_noparam_ ());
+% FIXME: Check input size and type
+
+assert ((lm.param_min <= param) && (param <= lm.param_max));
+
+lm.param = param;
+lm.angular_frequency = exp (param);
 
 end % function
-
-
-%!test stk_test_class ('stk_lm_cubic')

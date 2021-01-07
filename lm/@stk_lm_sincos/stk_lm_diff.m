@@ -1,13 +1,8 @@
-% STK_LM_CUBIC creates a cubic linear model object
-%
-% CALL: LM = STK_LM_CUBIC ()
-%
-%    creates a cubic linear model object LM.
+% STK_LM_DIFF [overload STK function]
 
 % Copyright Notice
 %
-%    Copyright (C) 2017, 2018, 2021 CentraleSupelec
-%    Copyright (C) 2014 SUPELEC
+%    Copyright (C) 2021 CentraleSupelec
 %
 %    Author:  Julien Bect  <julien.bect@centralesupelec.fr>
 
@@ -16,7 +11,7 @@
 %    This file is part of
 %
 %            STK: a Small (Matlab/Octave) Toolbox for Kriging
-%               (https://github.com/stk-kriging/stk/)
+%               (http://sourceforge.net/projects/kriging)
 %
 %    STK is free software: you can redistribute it and/or modify it under
 %    the terms of the GNU General Public License as published by the Free
@@ -31,11 +26,20 @@
 %    You should  have received a copy  of the GNU  General Public License
 %    along with STK.  If not, see <http://www.gnu.org/licenses/>.
 
-function lm = stk_lm_cubic ()
+function [V, lm] = stk_lm_diff (lm, x, diff)
 
-lm = class (struct (), 'stk_lm_cubic', stk_lm_noparam_ ());
+if diff == 1  % diff wrt theta = log (angular_frequency)
+    
+    u = lm.angular_frequency * x;
+    V = [u .* cos(u), - u .* sin(u)];
+    
+else
+    
+    stk_error ('Incorrect value of the diff argument', 'InvalidArgument');
+    
+end
+
+% NOTE/FIXME: We could save u, sin(u) and cos(u) at eval time
+%   (we currently this would be useless since STK would not use it)
 
 end % function
-
-
-%!test stk_test_class ('stk_lm_cubic')

@@ -109,9 +109,12 @@ model.param = param0;
 model.lognoisevariance = lnv0;
 
 % Get selectors
+% (this stuff is ugly, we should simplify by getting rid of do_estim_lnv)
 select = stk_param_getblockselectors (model);
-covparam_select = select{1};
-noiseparam_select = select{2} & do_estim_lnv;
+lmparam_select = select{1};
+covparam_select = select{2};
+noiseparam_select = select{3} & do_estim_lnv;
+select = [lmparam_select; covparam_select; noiseparam_select];
 
 % NOTE ABOUT SELECTOrS / NaNs
 % The situation is currently a little odd, with a focus on estimating
@@ -127,12 +130,12 @@ noiseparam_select = select{2} & do_estim_lnv;
 % FIXME: Clarify this confusing situation...
 
 % Call optimization routine
-if nargout > 2
+if nargout >= 2
     [model_opt, info] = stk_param_estim_optim ...
-        (model, xi, zi, criterion, covparam_select, noiseparam_select);
+        (model, xi, zi, criterion, select);
 else
     model_opt = stk_param_estim_optim ...
-        (model, xi, zi, criterion, covparam_select, noiseparam_select);
+        (model, xi, zi, criterion, select);
 end
 
 end % function
@@ -216,21 +219,28 @@ end % function
 
 function select = stk_param_getblockselectors (model)
 
+% FIXME: This function only works for prior model structs.
+%        It does not belong here...
+
 stk_assert_model_struct (model);
 
-select = cell (2, 1);
+select = cell (3, 1);
+
+% Linear model parameters
+lmparam_size = length (stk_get_optimizable_parameters (model.lm));
+select{1} = true (lmparam_size, 1);
 
 % Covariance parameters
-covparam = stk_get_optimizable_parameters (model.param);
-covparam_size = length (covparam);
-select{1} = true (covparam_size, 1);
+covparam_size = length (stk_get_optimizable_parameters (model.param));
+select{2} = true (covparam_size, 1);
 
 % Noise parameters
-noiseparam = stk_get_optimizable_noise_parameters (model);
-noiseparam_size = length (noiseparam);
-select{2} = true (noiseparam_size, 1);
+noiseparam_size = length (stk_get_optimizable_noise_parameters (model));
+select{3} = true (noiseparam_size, 1);
 
 end % function
+
+%#ok<*CTCH,*LERR,*SPWRN,*WNTAG>
 
 
 %!shared f, xi, zi, NI, param0, param1, model

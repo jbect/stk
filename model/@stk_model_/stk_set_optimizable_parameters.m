@@ -1,13 +1,10 @@
-% STK_LM_CUBIC creates a cubic linear model object
+% STK_SET_OPTIMIZABLE_PARAMETERS [overload STK internal]
 %
-% CALL: LM = STK_LM_CUBIC ()
-%
-%    creates a cubic linear model object LM.
+% See also: stk_get_optimizable_parameters
 
 % Copyright Notice
 %
-%    Copyright (C) 2017, 2018, 2021 CentraleSupelec
-%    Copyright (C) 2014 SUPELEC
+%    Copyright (C) 2020 CentraleSupelec
 %
 %    Author:  Julien Bect  <julien.bect@centralesupelec.fr>
 
@@ -16,7 +13,7 @@
 %    This file is part of
 %
 %            STK: a Small (Matlab/Octave) Toolbox for Kriging
-%               (https://github.com/stk-kriging/stk/)
+%               (http://sourceforge.net/projects/kriging)
 %
 %    STK is free software: you can redistribute it and/or modify it under
 %    the terms of the GNU General Public License as published by the Free
@@ -31,11 +28,14 @@
 %    You should  have received a copy  of the GNU  General Public License
 %    along with STK.  If not, see <http://www.gnu.org/licenses/>.
 
-function lm = stk_lm_cubic ()
+function model = stk_set_optimizable_parameters (model, value)
 
-lm = class (struct (), 'stk_lm_cubic', stk_lm_noparam_ ());
+% Model objects that *do* have some optimizable parameters must
+% overload this function.
+
+if ~ isempty (value)
+    stk_error (sprintf (['Model object of class %s have no ' ...
+        'optimizable parameters.'], class (model)), 'IncorrectArgument');
+end
 
 end % function
-
-
-%!test stk_test_class ('stk_lm_cubic')

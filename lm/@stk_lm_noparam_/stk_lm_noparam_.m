@@ -1,13 +1,11 @@
-% STK_LM_CUBIC creates a cubic linear model object
+% STK_LM_NOPARAM_ [internal]
 %
-% CALL: LM = STK_LM_CUBIC ()
+% Base class for linear model objects w/o hyper-parameters.
 %
-%    creates a cubic linear model object LM.
 
 % Copyright Notice
 %
-%    Copyright (C) 2017, 2018, 2021 CentraleSupelec
-%    Copyright (C) 2014 SUPELEC
+%    Copyright (C) 2021 CentraleSupelec
 %
 %    Author:  Julien Bect  <julien.bect@centralesupelec.fr>
 
@@ -16,7 +14,7 @@
 %    This file is part of
 %
 %            STK: a Small (Matlab/Octave) Toolbox for Kriging
-%               (https://github.com/stk-kriging/stk/)
+%               (http://sourceforge.net/projects/kriging)
 %
 %    STK is free software: you can redistribute it and/or modify it under
 %    the terms of the GNU General Public License as published by the Free
@@ -31,11 +29,11 @@
 %    You should  have received a copy  of the GNU  General Public License
 %    along with STK.  If not, see <http://www.gnu.org/licenses/>.
 
-function lm = stk_lm_cubic ()
+function lm = stk_lm_noparam_ ()
 
-lm = class (struct (), 'stk_lm_cubic', stk_lm_noparam_ ());
+lm = class (struct (), 'stk_lm_noparam_', stk_lm_ ());
 
 end % function
 
 
-%!test stk_test_class ('stk_lm_cubic')
+%!test stk_test_class ('stk_lm_noparam_')

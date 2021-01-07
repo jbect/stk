@@ -33,7 +33,7 @@
 
 function lm = stk_lm_quadratic ()
 
-lm = class (struct (), 'stk_lm_quadratic', stk_lm_ ());
+lm = class (struct (), 'stk_lm_quadratic', stk_lm_noparam_ ());
 
 end % function
 

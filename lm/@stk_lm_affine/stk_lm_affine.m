@@ -33,7 +33,7 @@
 
 function lm = stk_lm_affine ()
 
-lm = class (struct (), 'stk_lm_affine', stk_lm_ ());
+lm = class (struct (), 'stk_lm_affine', stk_lm_noparam_ ());
 
 end  % function stk_lm_affine
 

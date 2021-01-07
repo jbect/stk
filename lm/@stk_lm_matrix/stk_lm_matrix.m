@@ -41,7 +41,7 @@ else
     lm = struct ('data', data);
 end
 
-lm = class (lm, 'stk_lm_matrix', stk_lm_ ());
+lm = class (lm, 'stk_lm_matrix', stk_lm_noparam_ ());
 
 end % function
 

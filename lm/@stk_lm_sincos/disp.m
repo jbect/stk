@@ -1,13 +1,8 @@
-% STK_LM_CUBIC creates a cubic linear model object
-%
-% CALL: LM = STK_LM_CUBIC ()
-%
-%    creates a cubic linear model object LM.
+% DISP [overload base function]
 
 % Copyright Notice
 %
-%    Copyright (C) 2017, 2018, 2021 CentraleSupelec
-%    Copyright (C) 2014 SUPELEC
+%    Copyright (C) 2020 CentraleSupelec
 %
 %    Author:  Julien Bect  <julien.bect@centralesupelec.fr>
 
@@ -16,7 +11,7 @@
 %    This file is part of
 %
 %            STK: a Small (Matlab/Octave) Toolbox for Kriging
-%               (https://github.com/stk-kriging/stk/)
+%               (http://sourceforge.net/projects/kriging)
 %
 %    STK is free software: you can redistribute it and/or modify it under
 %    the terms of the GNU General Public License as published by the Free
@@ -31,11 +26,20 @@
 %    You should  have received a copy  of the GNU  General Public License
 %    along with STK.  If not, see <http://www.gnu.org/licenses/>.
 
-function lm = stk_lm_cubic ()
+function disp (lm)
 
-lm = class (struct (), 'stk_lm_cubic', stk_lm_noparam_ ());
+fprintf ('<%s>\n', stk_sprintf_sizetype (lm));
+
+loose_spacing = stk_disp_isloose ();
+
+if loose_spacing
+    fprintf ('|\n');
+end
+
+fprintf ('|   angular_frequency:  %.3g\n', lm.angular_frequency);
+
+if loose_spacing
+    fprintf ('|\n');
+end
 
 end % function
-
-
-%!test stk_test_class ('stk_lm_cubic')
