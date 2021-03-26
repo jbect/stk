@@ -100,7 +100,9 @@ zi_tilde = linsolve (U, zi, UT_TRANSA);
 
 if ~ simple_kriging
     P_tilde = linsolve (U, P, UT_TRANSA);
-    beta = (P_tilde' * P_tilde) \ (P_tilde' * zi_tilde);
+    [Q,R] = qr(P_tilde);
+    beta = R\(Q'*zi_tilde);
+
     % yi = zi - P * beta;
     yi_tilde = zi_tilde - P_tilde * beta;
 else

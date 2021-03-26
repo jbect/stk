@@ -68,7 +68,8 @@ zi = double (zi);
 L = stk_cholcov (K, 'lower');
 W = linsolve (L, P, struct ('LT', true));
 u = linsolve (L, zi, struct ('LT', true));
-beta = (W' * W) \ (W' * u);
+[Q,R] = qr(W);
+beta = R\(Q'*u);
 
 if nargin > 1
     % Assuming that the actual covariance matrice is sigma^2 K, compute the
